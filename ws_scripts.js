@@ -54,6 +54,7 @@ async function fetchNewData() {
 fetchNewData();
 
 const updateSongList = (list) => {
+    console.log(list)
     tempList = [];
     for (i = 0; i < list.length; i++) {
         tempList[i] = new Object;
