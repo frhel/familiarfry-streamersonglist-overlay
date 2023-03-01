@@ -72,8 +72,10 @@ ul.songList {
         position: absolute;
         top: -55px;
         left: -8px;
-        background: white;
+        background: rgb(211, 211, 211);
         color: black;
+        border-right:rgba(76, 10, 241, 0.5) 1px solid;
+        border-top: rgba(76, 10, 241, 0.5) 1px solid;
         padding: 12px 20px 5px 15px;
         font-size: 30px;
         font-style: italic;
