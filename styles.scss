@@ -167,7 +167,7 @@ ul.streamInfo {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: 200%;
     height: 96px;
     background: transparent;
     z-index: -1;
@@ -177,11 +177,11 @@ ul.streamInfo {
 canvas {
     position: absolute;
     opacity: 0.5;
-    height: 200px;
+    height: 100px;
     bottom:0;
-    left:-40%;
+    left:0;
     display: block;
-    filter: blur(7px) drop-shadow(0 0 30px rgba(51, 180, 172, 1));
+    filter: blur(6px) drop-shadow(0 0 30px rgba(51, 180, 172, 1));
     transform-origin: 0 100%;
     transform: skewX(-20deg);
     animation: fadein 6s 1;

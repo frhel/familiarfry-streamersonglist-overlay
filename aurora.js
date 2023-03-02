@@ -5,23 +5,23 @@
 // settings
 var DEBUG = false; // draw the debug line so we can see what it's doing, helps if you turn off the blur filter, too
 var CURVE_POINTS = 10; // curve control points, not counting vanishingPoint
-var CURVE_POINT_X_JITTER = 3; // how far off the base location a point can go, in percentage of difference from previous point
-var CURVE_POINT_Y_JITTER = 1;
-var CURVE_POINT_MAX_FLOAT_X_DIST = 500; // farthest a curve point can float per keyframe
-var CURVE_POINT_MAX_FLOAT_Y_DIST = 30;
+var CURVE_POINT_X_JITTER = 1.5; // how far off the base location a point can go, in percentage of difference from previous point
+var CURVE_POINT_Y_JITTER = 3.5;
+var CURVE_POINT_MAX_FLOAT_X_DIST = 270; // farthest a curve point can float per keyframe
+var CURVE_POINT_MAX_FLOAT_Y_DIST = 80;
 var CURVE_POINT_MIN_FLOAT_DIST = 15;
-var CURVE_POINT_MAX_FLOAT_TIME = 30000; // longest a curve point can take to get to next keyframe
+var CURVE_POINT_MAX_FLOAT_TIME = 9000; // longest a curve point can take to get to next keyframe
 var CURVE_POINT_MIN_FLOAT_TIME = 3000; // shortest a curve point can take to get to next keyframe
 var BRUSH_COUNT = 1000;
 var BRUSH_WIDTH = 30;
-var BRUSH_HEIGHT = 700;
+var BRUSH_HEIGHT = 450;
 var BRUSH_MIN_SCALE_Y = .02;
 var BRUSH_MAX_SCALE_Y_VARIANCE = .5;
 var BRUSH_MAX_ALPHA_VARIANCE = .7;
-var BRUSH_MAX_ANIM_TIME = 15000;
-var BRUSH_MIN_ANIM_TIME = 5000;
-var BRUSH_MAX_Z_ANIM_TIME = 140000;
-var BRUSH_MIN_Z_ANIM_TIME = 80000;
+var BRUSH_MAX_ANIM_TIME = 7000;
+var BRUSH_MIN_ANIM_TIME = 1500;
+var BRUSH_MAX_Z_ANIM_TIME = 80000;
+var BRUSH_MIN_Z_ANIM_TIME = 58000;
 var BRUSH_ALPHA_DROPOFF = .07;
 var MOUSE_X_OFFSET = 50;
 var MOUSE_Y_OFFSET = 25;
@@ -439,8 +439,8 @@ var bottomBar = document.getElementById('bottomBar');
 var gradCanvas = document.createElement('canvas');
 var gradCtx = gradCanvas.getContext('2d');
 var grad = gradCtx.createLinearGradient(bottomBar.clientWidth * 0.7, bottomBar.clientWidth, bottomBar.clientWidth * .4, 0);
-grad.addColorStop(.4, "rgb(50, 130, 80)");
-grad.addColorStop(.6, "rgba(100, 100, 120, .5)");
+grad.addColorStop(.4, "rgba(50, 130, 80, .5)");
+grad.addColorStop(.6, "rgba(100, 100, 120, .2)");
 var grad2 = gradCtx.createLinearGradient(bottomBar.clientWidth * 0.8, bottomBar.clientWidth * 1, bottomBar.clientWidth * .3, 0);
 grad2.addColorStop(.35, "rgb(50, 130, 140)");
 grad2.addColorStop(.7, "rgba(50, 70, 100,.7)");
@@ -454,9 +454,9 @@ grad2.addColorStop(.7, "rgba(50, 70, 100,.7)");
 //  * [@param fill] color or canvasGradient to fill the brushes with
 
 var curves = [
-    new Curve(bottomBar.clientWidth * .17, bottomBar.clientWidth * .7, .01, bottomBar.clientWidth * .8, bottomBar.clientWidth * .8, .8, BRUSH_COUNT * .3, .4, "rgb(60, 150, 120)"),
-    new Curve(bottomBar.clientWidth * .1, bottomBar.clientWidtht * .8, .05, bottomBar.clientWidth * .8, bottomBar.clientWidth * .4, 1, null, .5, grad),
-    new Curve(bottomBar.clientWidth * .25, bottomBar.clientWidth * .65, .33, bottomBar.clientWidth * .55, 0, 1.1, BRUSH_COUNT * .6, 0.6, grad2)
+    new Curve(bottomBar.clientWidth * .01, bottomBar.clientHeight * 1, .1, bottomBar.clientWidth * .7, bottomBar.clientHeight * 1, .8, BRUSH_COUNT * .3, .4, "rgb(60, 150, 120)"),
+    new Curve(bottomBar.clientWidth * .02, bottomBar.clientHeight * 1, .2, bottomBar.clientWidth * .6, bottomBar.clientHeight * 1, .8, BRUSH_COUNT * .3, .3, grad),
+    new Curve(bottomBar.clientWidth * .01, bottomBar.clientHeight * 1, .1, bottomBar.clientWidth * .55, 0, 1.1, BRUSH_COUNT * .5, 0.2, grad2)
 ]
 var nl1 = new NorthernLights(bottomBar, null, null, curves);
 
