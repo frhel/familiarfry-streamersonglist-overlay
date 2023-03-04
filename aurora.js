@@ -454,8 +454,8 @@ grad2.addColorStop(.7, "rgba(50, 70, 100,.7)");
 //  * [@param fill] color or canvasGradient to fill the brushes with
 
 var curves = [
-    new Curve(bottomBar.clientWidth * .01, bottomBar.clientHeight * 1, .1, bottomBar.clientWidth * .7, bottomBar.clientHeight * 1, .8, BRUSH_COUNT * .3, .4, "rgb(60, 150, 120)"),
-    new Curve(bottomBar.clientWidth * .02, bottomBar.clientHeight * 1, .2, bottomBar.clientWidth * .6, bottomBar.clientHeight * 1, .8, BRUSH_COUNT * .3, .3, grad),
+    new Curve(bottomBar.clientWidth * .01, bottomBar.clientHeight * 1, .1, bottomBar.clientWidth * .7, bottomBar.clientHeight * 0.8, .8, BRUSH_COUNT * .3, .4, "rgb(60, 150, 120)"),
+    new Curve(bottomBar.clientWidth * .02, bottomBar.clientHeight * 1, .2, bottomBar.clientWidth * .6, bottomBar.clientHeight * 0.8, .8, BRUSH_COUNT * .3, .3, grad),
     new Curve(bottomBar.clientWidth * .01, bottomBar.clientHeight * 1, .1, bottomBar.clientWidth * .55, 0, 1.1, BRUSH_COUNT * .5, 0.2, grad2)
 ]
 var nl1 = new NorthernLights(bottomBar, null, null, curves);
