@@ -3,6 +3,8 @@
     padding: 0;
 }
 
+
+
 $brand-color: rgb(76, 10, 241);
 $brand-color-light: rgb(149, 10, 241);
 $green: rgb(0, 255, 0);
@@ -26,6 +28,8 @@ body {
     background: #333;
     color: #eeeeee;
     font-family: 'Baloo Bhaijaan 2', cursive;
+    overflow: hidden;
+    font-size: 16px;
 }
 
 ul.songList,
@@ -41,8 +45,7 @@ ul.songList {
     left: 8px;
     bottom: 0;
     position: absolute;
-    width: 580px;
-    height: 80px;
+    height: 120px;
 
     li {
         height: 30px;
@@ -54,91 +57,114 @@ ul.songList {
         opacity: 1;
         transition: all 1s ease;
         position: relative;
-        padding-left: 15px;
+        padding-left: 30px;
     }
 
     li::before {
         content: '';
         display: block;
         position: absolute;
-        height: 100%;
-        width: 50px;
-        background: $brand-color;
+        height: 150%;
+        width: 200px;
+        background: rgba(127, 79, 248, 1);
         border-radius: 100%;
-        transform: translatex(-130%) translateY(-13%);
+        transform: translateX(-110%) translateY(-23%);
+        filter:blur(30px);
     }
 
-    .statusBox.visible {
+    #statusBox, #song, #artist, #requester {
+        transition: all 0.8s ease-in-out;
+        opacity: 1;
+        width:100%;
+    }
+
+    #statusBox {
         position: absolute;
-        top: -55px;
+        display: block;
+        top: -85px;
         left: -8px;
-        background: rgb(211, 211, 211);
+        background-color: rgba(0, 0, 0, 0.8);
+        background: linear-gradient(90deg, rgba(127, 79, 248, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
         color: black;
-        border-right:rgba(76, 10, 241, 0.5) 1px solid;
-        border-top: rgba(76, 10, 241, 0.5) 1px solid;
-        padding: 12px 20px 5px 15px;
-        font-size: 30px;
+        padding: 18px 100px 12px 15px;
+        font-size: 2.8rem;
         font-style: italic;
-    }
-    .statusBox.hidden {
-        display: none;
-    }
+        color: white;
+        transition-delay: 0.5s;
 
-    .songLabel {
-        font-style: italic;
-        font-size: 18px;
-        padding: 5px;
-        display: none;
-
+        &.out {
+            transition-delay:0s;
+            opacity:0;
+        }
     }
 
-    .song {
+    #song.hidden, #artist.hidden, #requester.hidden {
+        transition: none;
+        transform: translateX(25%);
+        opacity:0;
+    }
+
+    #song.out, #artist.out, #requester.out {
+        transform: translateX(-40%);
+        opacity:0;
+    }
+
+    #song {
         display: inline-block;
-        font-size: 30px;
+        font-size: 2.8rem;
     }
 
-    .artist {
+    #artist {
         padding-left: 0px;
-        font-size: 24px;
-        padding: 3px;
+        font-size: 2.4rem;
+        padding: 5px;
+        margin-left: 4px;
+        transition-delay: 0.1s;
 
         .by {
-            font-size: 18px;
+            font-size: 2.2rem;
             font-style: italic;
         }
     }
 
-    .requester {
-        font-size: 16px;
+    #requester {
+        font-size: 1.5rem;
         font-style: italic;
         padding: 3px;
-        opacity: 0.5;
+        opacity: 0.8;
+        transition-delay: 0.15s;
     }
 }
 
 
 
 ul.streamInfo {
+    display:block;
     position: absolute;
-    bottom: 0;
-    left: 490px;
-    width: 300px;
-    height: 80px;
-    font-size: 28px;
+    bottom: 5px;
+    left: 50%;
+    width: 400px;
+    height: 115px;
+    font-size: 3rem;
     line-height: 1;
+    transform: translateX(-50%);
 
     li {
         text-decoration: none;
         list-style: none;
         text-align: center;
+        font-size:2.6rem;
+        line-height:3rem;
     }
 
     li.song_request_status {
         margin-top: -3px;
 
+
         span {
             color: $brand-color-light;
             font-weight: 900;
+            font-size: 2.6rem;
         }
     }
 
@@ -148,10 +174,10 @@ ul.streamInfo {
             font-weight: 900;
         }
         span.curr_song_count {
-            font-size: 26px;
+            font-size: 2.6rem;
         }
         span.max_song_count {
-            font-size: 26px;
+            font-size: 2.6rem;
         }
     }
 
@@ -168,16 +194,17 @@ ul.streamInfo {
     bottom: 0;
     left: 0;
     width: 200%;
-    height: 96px;
-    background: transparent;
+    height: 140px;
+    background-color: rgba(0,0,0,0.9);
     z-index: -1;
     overflow-x: hidden;
+    border-top: 1px solid $brand-color;
 }
 
 canvas {
     position: absolute;
     opacity: 0.8;
-    height: 100px;
+    height: 140px;
     bottom:0;
     left:0;
     display: block;

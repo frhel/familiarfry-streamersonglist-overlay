@@ -80,7 +80,7 @@ const updateSongList = (list) => {
             tempList[i].artist = list[i].song.artist;
         }
 
-        if (list[i].note === "lav" || list[i].note === "improv"|| list[i].note === "ll" || list[i].note === "original") {
+        if (list[i].note === "lav" || list[i].note === "improv" || list[i].note === "ll" || list[i].note === "original" || list[i].note === "end") {
             tempList[i].note = list[i].note.toLowerCase();
         } else if (tempList[i].originalSong === true) {
             tempList[i].note = "original";
@@ -141,48 +141,66 @@ function drawInfo() {
 }
 
 const drawList = () => {
-    let songListContainer = document.querySelector("ul.songList");
-    let songListElems = document.querySelectorAll("ul.songList li");
-    songListElems.forEach((val) => {
-        val.remove();
-    });
-
     if (!_songList.length) {
         return;
     }
-    for (i = 0; i < 1; i++) {
-        let statusBoxVisible = "hide";
-        let statusBoxText = "";
-        let songElem = document.querySelector("li[data-id='" + _songList[i].songId + "']");
-        if (songElem === null) {
-            statusBoxVisible = "visible";
-            if (_songList[i].note === "lav") {
-                statusBoxText = "Like a Version";
-            } else if (_songList[i].note === "improv") {
-                statusBoxText = "Improvised Song";
-            } else if (_songList[i].note === "ll") {
-                statusBoxText = "Live Learn";
-            } else if (_songList[i].note === "original") {
-                statusBoxText = "Original";
-            } else {
-                statusBoxVisible = "hidden";
-            }
 
-            let newSong = document.createElement("li");
-            newSong.setAttribute("data-id", _songList[i].songId);
-            newSong.setAttribute("class", "c" + i);
-            songListContainer.appendChild(newSong);
-            if (_songList[i].artist != "N/A") {
-                newSong.innerHTML = `
-                <div class="statusBox ${statusBoxVisible}">${statusBoxText}</div>
-                <div class="songLabel">Current Song</div>
-                <div class="song">${_songList[i].title}</div>
-                <div class="artist"><span class="by">by</span>&nbsp; ${_songList[i].artist}</div>
-                <div class="requester">Requested by @${_songList[i].requester}</div>`;
-            }
-        } else {
-            songElem.setAttribute("class", "c" + i)
-        }
+    let statusDiv = document.getElementById("statusBox");
+    let songDiv = document.getElementById("song");
+    let artistDiv = document.getElementById("artist");
+    let requesterDiv = document.getElementById("requester");
+
+
+    let firstSong = _songList[0];
+
+    let statusBoxText = "";
+    statusBoxVisible = "visible";
+    if (firstSong.note === "lav") {
+        statusBoxText = "Like a Version";
+    } else if (firstSong.note === "improv") {
+        statusBoxText = "Improvised Song";
+    } else if (firstSong.note === "ll") {
+        statusBoxText = "Live Learn";
+    } else if (firstSong.note === "original") {
+        statusBoxText = "Original";
+    } else if (firstSong.note === "end") {
+        statusBoxText = "End of Stream";
+    } else {
+        statusBoxVisible = "out";
+    }
+
+    if (firstSong.title != songDiv.innerHTML) {
+        statusDiv.setAttribute("class", "out");
+        songDiv.setAttribute("class", "out");
+        artistDiv.setAttribute("class", "out");
+        requesterDiv.setAttribute("class", "out");
+
+        setTimeout(() => {
+            songDiv.setAttribute("class", "hidden");
+            artistDiv.setAttribute("class", "hidden");
+            requesterDiv.setAttribute("class", "hidden");
+        }, 1400)
+
+        setTimeout(() => {
+            statusDiv.innerHTML = statusBoxText;
+            statusDiv.setAttribute("class", statusBoxVisible);
+
+            songDiv.innerHTML = firstSong.title;
+            songDiv.setAttribute("class", "");
+
+            artistDiv.innerHTML = `<span class="by">by</span>&nbsp; ${firstSong.artist}`;
+            artistDiv.setAttribute("class", "");
+
+            requesterDiv.innerHTML = `Requested by @${firstSong.requester}`;
+            requesterDiv.setAttribute("class", "");
+        }, 1500);
+    } else if (statusBoxText != statusDiv.innerHTML) {
+        statusDiv.setAttribute("class", "out");
+
+        setTimeout(() => {
+            statusDiv.innerHTML = statusBoxText;
+            statusDiv.setAttribute("class", statusBoxVisible);
+        }, 700)
     }
 }
 
