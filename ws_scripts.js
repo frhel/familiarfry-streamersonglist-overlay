@@ -29,6 +29,28 @@ let _baseAPIUri = "https://api.streamersonglist.com/v1/streamers/7325";
 
 let _globalData = new Object;
 
+// Requester name shortcuts - map short codes to full names
+const requesterShortcuts = {
+    "f": "Fry",
+    "z": "Zion",
+    "l": "Lundin",
+    "fa": "FaustianOrgan",
+    "j": "onlyjakeroberts",
+    "r": "Ratafluff"
+};
+
+// Valid note types for song status
+const validNotes = ["lav", "improv", "ll", "original", "end"];
+
+// Note display text mapping
+const noteDisplayText = {
+    "lav": "Like a Version",
+    "improv": "Improvised Song",
+    "ll": "Live Learn",
+    "original": "Original",
+    "end": "End of Stream"
+};
+
 // ------------------------------------------- //
 // -------------Streamer Stuff --------------- //
 async function fetchStreamerData() {
@@ -55,12 +77,12 @@ fetchNewData();
 
 const updateSongList = (list) => {
     console.log(list)
-    tempList = [];
-    for (i = 0; i < list.length; i++) {
+    const tempList = [];
+    for (let i = 0; i < list.length; i++) {
         tempList[i] = new Object;
         tempList[i].originalSong = false;
         if (list[i].song && list[i].song.attributeIds.length > 0) {
-            for (y = 0; y < list[i].song.attributeIds.length; y++) {
+            for (let y = 0; y < list[i].song.attributeIds.length; y++) {
                 if (list[i].song.attributeIds[y] === 40118) {
                     tempList[i].originalSong = true;
                 }
@@ -68,7 +90,7 @@ const updateSongList = (list) => {
         }
         if (typeof list[i].nonlistSong === "string") {
             if (list[i].nonlistSong.includes(" - ")) {
-                splitStr = list[i].nonlistSong.split(" - ");
+                const splitStr = list[i].nonlistSong.split(" - ");
                 tempList[i].artist = splitStr[0];
                 tempList[i].title = splitStr[1];
             } else {
@@ -80,13 +102,10 @@ const updateSongList = (list) => {
             tempList[i].artist = list[i].song.artist;
         }
 
-        if (list[i].note === "lav" || list[i].note === "improv" || list[i].note === "ll" || list[i].note === "original" || list[i].note === "end") {
-            tempList[i].note = list[i].note.toLowerCase();
-        } else if (tempList[i].originalSong === true) {
-            tempList[i].note = "original";
-        } else {
-            tempList[i].note = "";
-        }
+        const noteValue = list[i].note?.toLowerCase() || "";
+        tempList[i].note = validNotes.includes(noteValue) ? noteValue
+                          : tempList[i].originalSong ? "original"
+                          : "";
 
         tempList[i].songId = list[i].id;
         if (list[i].requests[0].name) {
@@ -94,18 +113,11 @@ const updateSongList = (list) => {
         } else {
             tempList[i].requester = "";
         }
-        if (tempList[i].requester.toLowerCase() === "f") {
-            tempList[i].requester = "Fry";
-        } else if (tempList[i].requester.toLowerCase() === "z") {
-            tempList[i].requester = "Zion";
-        } else if (tempList[i].requester.toLowerCase() === "l") {
-            tempList[i].requester = "Lundin";
-        } else if (tempList[i].requester.toLowerCase() === "fa") {
-            tempList[i].requester = "FaustianOrgan";
-        } else if (tempList[i].requester.toLowerCase() === "j") {
-            tempList[i].requester = "onlyjakeroberts";
-        } else if (tempList[i].requester.toLowerCase() === "r") {
-            tempList[i].requester = "Ratafluff";
+
+        // Apply requester shortcuts if a match exists
+        const shortcut = tempList[i].requester.toLowerCase();
+        if (requesterShortcuts[shortcut]) {
+            tempList[i].requester = requesterShortcuts[shortcut];
         }
     }
 
@@ -153,21 +165,8 @@ const drawList = () => {
 
     let firstSong = _songList[0];
 
-    let statusBoxText = "";
-    statusBoxVisible = "visible";
-    if (firstSong.note === "lav") {
-        statusBoxText = "Like a Version";
-    } else if (firstSong.note === "improv") {
-        statusBoxText = "Improvised Song";
-    } else if (firstSong.note === "ll") {
-        statusBoxText = "Live Learn";
-    } else if (firstSong.note === "original") {
-        statusBoxText = "Original";
-    } else if (firstSong.note === "end") {
-        statusBoxText = "End of Stream";
-    } else {
-        statusBoxVisible = "out";
-    }
+    const statusBoxText = noteDisplayText[firstSong.note] || "";
+    const statusBoxVisible = statusBoxText ? "visible" : "out";
 
     if (firstSong.title != songDiv.innerHTML) {
         statusDiv.setAttribute("class", "out");
@@ -205,8 +204,8 @@ const drawList = () => {
 }
 
 const idExists = (id) => {
-    match = false;
-    for (i = 0; i < _songList.length; i++) {
+    let match = false;
+    for (let i = 0; i < _songList.length; i++) {
         if (_songList[i].songId == id) {
             match = true;
         }
